@@ -99,8 +99,8 @@ $$ language sql immutable;
 -- param g Grade (rating) [1=again,2=hard,3=good,4=easy]
 -- return {number} $$\text{next}_D$$
 create function next_difficulty(d numeric, g rating) returns numeric as $$
-    select constrain_difficulty(
-      mean_reversion(init_difficulty('easy'), d - w(6) * (gradenum(g) - 3))
+	select constrain_difficulty(
+	  mean_reversion(init_difficulty('easy'), d - w(6) * (gradenum(g) - 3))
 	);
 $$ language sql immutable;
 
@@ -116,11 +116,11 @@ create function next_recall_stability(d numeric, s numeric, r numeric, g rating)
 		case when 'hard' = g then w(15) else 1 end as hard_penalty,
 		case when 'easy' = g then w(16) else 1 end as easy_bound
 	)
-    select clamp(
+	select clamp(
 		s * (
 			1 + exp(w(8)) * (11 - d) * power(s, -w(9)) *
 			(exp((1 - r) * w(10)) - 1) *
-        	hard_penalty * easy_bound
+			hard_penalty * easy_bound
 		),
 	0.01, maximum_interval()) from vars;
 $$ language sql immutable;
@@ -132,7 +132,7 @@ $$ language sql immutable;
 -- param r Retrievability (probability of recall)
 -- @return {number} S^\prime_f new stability after forgetting
 create function next_forget_stability(d numeric, s numeric, r numeric) returns numeric as $$
-    select clamp(
+	select clamp(
 		w(11) * power(d, -w(12)) *
 		(power(s + 1, w(13)) - 1) *
 		exp((1 - r) * w(14)),
@@ -156,7 +156,7 @@ $$ language sql immutable;
 -- param s Stability (interval when R=90%)
 -- @return {number} r Retrievability (probability of recall)
 create function forgetting_curve(days integer, s numeric) returns numeric as $$
-    select power(1 + (factor() * days) / s, decay());
+	select power(1 + (factor() * days) / s, decay());
 $$ language sql immutable;
 
 

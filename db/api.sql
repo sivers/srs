@@ -61,9 +61,9 @@ create function srs.edit(_id integer, _deck text, _front text, _back text,
 declare
 	err text;
 begin
-    update cards
-    set deck = $2, front = $3, back = $4
-    where id = $1;
+	update cards
+	set deck = $2, front = $3, back = $4
+	where id = $1;
 	ok = true;
 	js = '{}';
 exception
