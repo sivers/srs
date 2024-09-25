@@ -1,6 +1,10 @@
--- API FUNCTIONS: JUST CALL THESE
--- decks()	| 
+-- API FUNCTIONS: USE JUST THESE
 
+
+
+-- list decks with count of cards due
+-- use this to call next(deck)
+--| [{deck, count int}]
 create function srs.decks(
 	out ok boolean, out js json) as $$
 begin
@@ -17,6 +21,10 @@ end;
 $$ language plpgsql;
 
 
+
+-- add a new card. deck name is whatever you want, new or existing
+-- front and back are HTML, so if if you need < & >, escape it yourself
+--| {id int} || {error}
 create function srs.add(_deck text, _front text, _back text,
 	out ok boolean, out js json) as $$
 declare
@@ -36,6 +44,9 @@ end;
 $$ language plpgsql;
 
 
+
+-- get next card due in this deck, or ok=false if none due
+--| {id int, front, back} || {error}
 create function srs.next(_deck text,
 	out ok boolean, out js json) as $$
 begin
@@ -56,6 +67,9 @@ end;
 $$ language plpgsql;
 
 
+
+-- edit a card's deck, front, or back content
+--| {} || {error}
 create function srs.edit(_id integer, _deck text, _front text, _back text,
 	out ok boolean, out js json) as $$
 declare
@@ -74,8 +88,10 @@ end;
 $$ language plpgsql;
 
 
--- rate as 'again', 'hard', 'good', or 'easy'
+
+-- rate card as 'again', 'hard', 'good', or 'easy'
 -- returns deck of this card to be used in next(deck)
+--| {deck}
 create function srs.review(_cardid integer, rating,
 	out ok boolean, out js json) as $$
 declare
