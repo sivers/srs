@@ -46,25 +46,25 @@ If "ok" is false, "js" will be {"error": "explanation"}
 ## usage
 
 ```sql
-select * from add('pets', 'My first dog?', 'Charlie');
-select * from add('pets', 'My last dog?', 'Snoopy');
-select * from add('places', 'Capital of Azerbaijan?', 'Bakoo');
+select add('pets', 'My first dog?', 'Charlie');
+select add('pets', 'My last dog?', 'Snoopy');
+select add('places', 'Capital of Azerbaijan?', 'Bakoo');
 
-select * from edit(3, 'places', 'Capital of Azerbaijan?', 'Baku');
+select edit(3, 'places', 'Capital of Azerbaijan?', 'Baku');
 
-select * from decks();
+select decks();
 
-select * from next('pets');
-select * from review(1, 'hard');
+select next('pets');
+select review(1, 'hard');
 
-select * from next('pets');
-select * from review(2, 'easy');
+select next('pets');
+select review(2, 'easy');
 ```
 
 Front and Back content is interpreted as HTML, so put media files into public/ directory then use HTML to present them:
 
 ```sql
-select * from add('places',
+select add('places',
   'How to say this place? <img src="paris.jpg">',
   'Paris <audio src="paris.mp3" autoplay controls></audio>');
 ```
