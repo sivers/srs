@@ -1,13 +1,13 @@
 # Open Spaced Repetition in PostgreSQL functions
 
 
-## origin:
+## origin
 
 [Free Spaced Repetition Scheduler (v5)](https://github.com/open-spaced-repetition)
 
 
 
-## this PostgreSQL version:
+## this PostgreSQL version
 
 Written by [Derek Sivers](https://sive.rs/) in September 2024.
 I'm happy to discuss it, so [email me](https://sive.rs/contact) if you want, especially if you find errors.
@@ -16,7 +16,7 @@ I gave my parts the "unlicense" so you don't need to credit me.
 
 
 
-## install:
+## install
 
 ```
 cd db/
@@ -81,15 +81,15 @@ Thank you to [the wonderful people](https://github.com/orgs/open-spaced-repetiti
 
 
 
-## omitted:
+## omitted
 
 I don't need fuzzing, undo/rollback, log analysis optimization, or differentiation between basic versus long term scheduling, so I didn't add those.
-
 I've used Anki every day for 15+ years, so these are just the things I need.
+Simplification was my main mission here.
 
 
 
-## web, using Ruby:
+## web, using Ruby
 
 ```
 gem install pg
