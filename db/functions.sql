@@ -1,9 +1,6 @@
 -- PRIVATE FUNCTIONS, all to serve the final one: card_review
 -- Don't use these.  They use each other.  Instead, see api.sql
 
--- 
--- Default of short_term=true, and fuzz=false so not coding what's not needed.
-
 -- DECAY: CONSTANT: set to -0.5
 create function decay() returns numeric as $$
 	select -0.5;
@@ -49,7 +46,7 @@ $$ language sql immutable;
 -- not multiplied by s here, but that's done where it's called
 -- param request_retention 0<request_retention<=1,Requested retention rate
 create function calculate_interval_modifier(r numeric) returns numeric as $$
-	select (power($1, 1 / decay()) - 1) / factor();
+	select (power(r, 1 / decay()) - 1) / factor();
 $$ language sql immutable;
 
 -- LaTeX formula:
