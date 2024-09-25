@@ -91,7 +91,7 @@ $$ language plpgsql;
 
 -- rate card as 'again', 'hard', 'good', or 'easy'
 -- returns deck of this card to be used in next(deck)
---| {deck}
+--| {deck} || {error}
 create function srs.review(_cardid integer, rating,
 	out ok boolean, out js json) as $$
 declare
