@@ -32,10 +32,10 @@ sh reload-functions.sh
 
 | API function | parameters | purpose |
 |--------------|-------|---------|
-| **decks** | *none* | list how many cards due in each deck |
 | **add** | deck, front, back | create a new card with this content |
-| **next** | deck | get next due card from this deck |
 | **edit** | cards.id, deck, front, back | update this card's content |
+| **decks** |  | list how many cards due in each deck |
+| **next** | deck | get next due card from this deck |
 | **review** | cards.id, rating | after quizzing, rate card as again, hard, good, or easy |
 
 Every API function returns "ok" boolean and "js" JSON.
