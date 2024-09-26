@@ -66,7 +66,7 @@ Front and Back content is interpreted as HTML, so put media files into public/ d
 ```sql
 select add('places',
   'How to say this place? <img src="paris.jpg">',
-  'Paris <audio src="paris.mp3" autoplay controls></audio>');
+  'Paris <audio src="paris.mp3"></audio>');
 ```
 
 
@@ -84,8 +84,8 @@ Thank you to [the wonderful people](https://github.com/orgs/open-spaced-repetiti
 ## omitted
 
 I don't need fuzzing, undo/rollback, log analysis optimization, or differentiation between basic versus long term scheduling, so I didn't add those.
-I've used Anki every day for 15+ years, so these are just the things I need.
-Simplification was my main mission here.
+I've used Anki every day for 15+ years, so I know what I do and don't need.
+Simplification was my mission.
 
 
 
@@ -99,6 +99,13 @@ ruby web.rb
 
 HTML in the views/ directory.
 
-/ webroot in public/ meant mostly for cards' media files.
+/ webroot in public/ is for cards' media files.
 
+
+
+## TODO
+
+1. autoplay audio/video when viewing card front
+2. when flipped, stop front audio/video, start back audio/video
+3. test against FSRS to make sure I got scheduler right
 
