@@ -46,13 +46,13 @@ $$ language plpgsql;
 
 
 -- get next card due in this deck, or ok=false if none due
---| {id int, front, back} || {error}
+--| {id int, deck, front, back} || {error}
 create function srs.next(_deck text,
 	out ok boolean, out js json) as $$
 begin
 	ok = true;
 	js = row_to_json(r) from (
-		select id, front, back
+		select id, deck, front, back
 		from cards
 		where deck = $1
 		and due < now()
