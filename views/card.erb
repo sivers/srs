@@ -1,0 +1,67 @@
+<style>
+section#back, section#review, section#edit { display: none }
+</style>
+
+<section id="front">
+<%= @card[:front] %>
+</section>
+
+<section id="reveal">
+  <button id="flip">show</button>
+</section>
+
+<section id="back">
+<%= @card[:back] %>
+</section>
+
+<section id="review">
+<form action="/card/<%= @card[:id] %>/review" method="post">
+  <label>1 <input id="again" type="submit" name="rating" value="again"></label>
+  <label>2 <input id="hard"  type="submit" name="rating" value="hard"></label>
+  <label>3 <input id="good"  type="submit" name="rating" value="good"></label>
+  <label>4 <input id="easy"  type="submit" name="rating" value="easy"></label>
+</form>
+<button id="showedit">edit</button>
+</section>
+
+<section id="edit">
+<form action="/card/<%= @card[:id] %>/edit" method="post">
+  <label>deck:
+    <input type="text" name="deck" value="<%= @card[:deck] %>">
+  </label>
+  <label>front:
+    <textarea name="front"><%=h @card[:front] %></textarea>
+  </label>
+  <label>back:
+    <textarea name="back"><%=h @card[:back] %></textarea>
+  </label>
+  <input type="submit" value="update">
+</form>
+</form>
+</section>
+
+<script>
+/* flip button focused so you can just press [space] to show back */
+window.onload = function() {
+  document.getElementById('flip').focus();
+};
+/* when [flip] hide flip-button section, show answer and review buttons */
+document.getElementById('flip').addEventListener('click', function() {
+  document.getElementById('reveal').style.display = 'none';
+  document.getElementById('back').style.display = 'block';
+  document.getElementById('review').style.display = 'block';
+  /* also listen for 1 2 3 4 to trigger review buttons */
+  document.addEventListener('keydown', function(event) {
+    if (['1','2','3','4'].includes(event.key)) {
+      event.preventDefault();
+      document.getElementById({'1':'again','2':'hard','3':'good','4':'easy'}[event.key]).click();
+    }
+  });
+  /* also edit button shows edit form (instead of review) */
+  document.getElementById('showedit').addEventListener('click', function() {
+    document.getElementById('review').style.display = 'none';
+    document.getElementById('edit').style.display = 'block';
+  });
+});
+</script>
+

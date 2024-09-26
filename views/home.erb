@@ -17,10 +17,10 @@
 <h1>add</h1>
 <form action="/" method="post">
   <label>deck:
-    <input id="deck" type="text" name="deck" value="learn">
+    <input type="text" name="deck" value="learn">
   </label>
   <label>front:
-    <textarea name="front"></textarea>
+    <textarea id="front" name="front"></textarea>
   </label>
   <label>back:
     <textarea name="back"></textarea>
@@ -30,6 +30,6 @@
 </section>
 <script>
 window.onload = function() {
-  document.getElementById('deck').focus();
+  document.getElementById('front').focus();
 };
 </script>
