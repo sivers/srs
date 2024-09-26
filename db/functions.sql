@@ -165,7 +165,7 @@ $$ language sql immutable;
 -- update almost everything about it (except id/deck/front/back):
 -- update state, due, scheduled_days, stability, difficulty
 -- update reps, lapses, elapsed_days, last_review
-create function card_review(card_id int, grade rating, out nu cards) as $$
+create or replace function card_review(card_id int, grade rating, out nu cards) as $$
 declare
 	previous cards; -- as it is now, before updating
 	nu cards; -- as is will be when updated at function end
@@ -231,7 +231,7 @@ begin
 		when 'easy' then
 			nu.state = 'review';
 			nu.scheduled_days = greatest(next_interval(nu.stability),
-				1 + next_interval(next_short_term_stability(previous.stability, 3))
+				1 + next_interval(next_short_term_stability(previous.stability, 'good'))
 			);
 			nu.due = now() + (nu.scheduled_days || ' days')::interval;
 		end case;
