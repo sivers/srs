@@ -1,2 +1,35 @@
+<section id="decks">
+<% if @decks.size == 0 %>
+  <p>All done.</p>
+<% else %>
+  <ul>
+  <% @decks.each do |x| %>
+    <li>
+      <a href="/next?deck=<%= x[:deck] %>"><%= x[:deck] %></a>
+      (<%= x[:count] %>)
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+</section>
 
-
+<section id="add">
+<h1>add</h1>
+<form action="/" method="post">
+  <label>deck:
+    <input id="deck" type="text" name="deck" value="learn">
+  </label>
+  <label>front:
+    <textarea name="front"></textarea>
+  </label>
+  <label>back:
+    <textarea name="back"></textarea>
+  </label>
+  <input type="submit" value="add">
+</form>
+</section>
+<script>
+window.onload = function() {
+  document.getElementById('deck').focus();
+};
+</script>
