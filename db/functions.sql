@@ -165,7 +165,7 @@ $$ language sql immutable;
 -- update almost everything about it (except id/deck/front/back):
 -- update state, due, scheduled_days, stability, difficulty
 -- update reps, lapses, elapsed_days, last_review
-create or replace function card_review(card_id int, grade rating, out nu cards) as $$
+create function card_review(card_id int, grade rating, out nu cards) as $$
 declare
 	previous cards; -- as it is now, before updating
 	nu cards; -- as is will be when updated at function end
