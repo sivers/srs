@@ -105,7 +105,6 @@ HTML in the views/ directory.
 
 ## TODO
 
-1. autoplay audio/video when viewing card front
-2. when flipped, stop front audio/video, start back audio/video
-3. test against FSRS to make sure I got scheduler right
+1. media play button smarter
+2. test against FSRS to make sure I got scheduler right
 

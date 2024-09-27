@@ -1,6 +1,9 @@
 <style>
-section#back, section#review, section#edit { display: none }
+section#back, section#review, section#edit, button#play { display: none }
 </style>
+
+<!-- because browsers won't auto-play audio/video without interaction first -->
+<button id="play">play</button>
 
 <section id="front">
 <%= @card[:front] %>
@@ -37,24 +40,77 @@ section#back, section#review, section#edit { display: none }
   </label>
   <input type="submit" value="update">
 </form>
-</form>
 </section>
 
 <script>
-/* flip button focused so you can just press [space] to show back */
-window.onload = function() {
+// global array of audio/video elements & index
+let media = [];
+let i = 0;
+
+/* load global media[] array with <audio>/<video> in this <section id="id"> */
+function loadmedia(id) {
+  media = Array.from(document.querySelector(`#${id}`).querySelectorAll('audio, video'));
+  i = 0;
+}
+
+/* play <audio>/<video> in global media[] array */
+function playmedia() {
+  if (i < media.length) {
+    let av = media[i];
+    av.play();
+    av.addEventListener('ended', function onEnd() {
+      av.removeEventListener('ended', onEnd);
+      i++;
+      playmedia();
+    });
+  }
+}
+
+/* stop each <audio>/<video> element in global media[] array */
+function stopAll() {
+  media.forEach(av => {
+    av.pause();
+    av.currentTime = 0;
+  });
+}
+
+function focusflip () {
   document.getElementById('flip').focus();
+}
+
+function playallmedia() {
+  i = 0;
+  playmedia();
+}
+
+/* when front of card shows... */
+window.onload = function() {
+  /* load section#front media */
+  loadmedia('front');
+  if (media.length == 0) {
+    /* flip button focused so you can just press [space] to show back */
+    document.getElementById('flip').focus();
+  } else {
+    /* if there's <audio>/<video>, show, focus, enable [play] button */
+    document.getElementById('play').style.display = 'block';
+    document.getElementById('play').focus();
+    document.getElementById('play').addEventListener('click', playallmedia);
+    document.getElementById('play').addEventListener('click', focusflip);
+  }
 };
-/* when [flip] hide flip-button section, show answer and review buttons */
+
+/* [flip] button does a few things: */
 document.getElementById('flip').addEventListener('click', function() {
+  /* hide flip-button section, show answer and review buttons */
+  document.getElementById('play').removeEventListener('click', focusflip);
   document.getElementById('reveal').style.display = 'none';
   document.getElementById('back').style.display = 'block';
   document.getElementById('review').style.display = 'block';
-  /* also listen for 1 2 3 4 to trigger review buttons */
+  /* listen for 1 2 3 4 r to trigger buttons */
   document.addEventListener('keydown', function(event) {
-    if (['1','2','3','4'].includes(event.key)) {
+    if (['1','2','3','4','r'].includes(event.key)) {
       event.preventDefault();
-      document.getElementById({'1':'again','2':'hard','3':'good','4':'easy'}[event.key]).click();
+      document.getElementById({'1':'again','2':'hard','3':'good','4':'easy','r':'play'}[event.key]).click();
     }
   });
   /* also edit button shows edit form (instead of review) */
@@ -62,6 +118,16 @@ document.getElementById('flip').addEventListener('click', function() {
     document.getElementById('review').style.display = 'none';
     document.getElementById('edit').style.display = 'block';
   });
+  /* stop playing front media, start playing back */
+  stopAll();
+  loadmedia('back');
+  playmedia();
+  /* redefine [play] button to load then play all media on page */
+  document.getElementById('play').innerHTML = 'replay';
+  document.getElementById('play').removeEventListener('click', playallmedia);
+  document.getElementById('play').addEventListener('click', loadmedia('main'));
+  document.getElementById('play').addEventListener('click', playallmedia);
 });
+
 </script>
 
