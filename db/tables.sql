@@ -7,7 +7,7 @@ create table public.cards (
 	front text not null unique,         -- content (question)
 	back text not null,                 -- content (answer)
 	state state not null default 'new', -- state of the card (new, learning, review, relearning)
-	due timestamptz(0) not null default now(), -- datetime when the card is next due for review
+	due timestamptz(0) not null default now() - interval '1 minute', -- when card next due for review
 	scheduled_days integer not null default 0, -- days until card is due (interval until next scheduled)
 	elapsed_days integer not null default 0, -- days since card was last reviewed
 	last_review timestamptz(0),         -- most recent review date/time
