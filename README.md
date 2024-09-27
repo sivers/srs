@@ -1,4 +1,4 @@
-# Open Spaced Repetition in PostgreSQL functions
+# Spaced Repetition in PostgreSQL functions
 
 
 ## origin
