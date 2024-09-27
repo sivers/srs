@@ -30,10 +30,10 @@ section#back, section#review, section#edit { display: none }
     <input type="text" name="deck" value="<%= @card[:deck] %>">
   </label>
   <label>front:
-    <textarea name="front"><%=h @card[:front] %></textarea>
+    <textarea name="front"><%= Rack::Utils.escape_html(@card[:front]) %></textarea>
   </label>
   <label>back:
-    <textarea name="back"><%=h @card[:back] %></textarea>
+    <textarea name="back"><%= Rack::Utils.escape_html(@card[:back]) %></textarea>
   </label>
   <input type="submit" value="update">
 </form>

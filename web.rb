@@ -48,14 +48,3 @@ post '/card/:id/review' do
   redirect to('/next?deck=%s' % c[:deck])
 end
 
-# HTML escape
-def h(text)
-  esc = {
-    '&' => '&amp;',
-    '<' => '&lt;',
-    '>' => '&gt;',
-    '"' => '&quot;'}
-  pat = Regexp.union(*esc.keys)
-  text.to_s.gsub(pat) {|c| esc[c] }
-end
-
